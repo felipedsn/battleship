@@ -1,4 +1,4 @@
-package mlp.battleship;
+package mlp.battleship.board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,31 +39,31 @@ public class Board {
 	}
 	
 	private void addShipToGrid(Ship ship) {
-		int x = ship.getX();
-		int y = ship.getY();
+		int line = ship.getLine();
+		int column = ship.getColumn();
 		
 		for(int i = 0; i < ship.getSize(); i++) {
 			if(ship.getDirection() == Direction.HORIZONTAL) {
-				grid[x + i][y] = PositionStatus.SHIP;
+				grid[line][column + i] = PositionStatus.SHIP;
 			} else {
-				grid[x][y + i] = PositionStatus.SHIP;
+				grid[line + i][column] = PositionStatus.SHIP;
 			}
 		}
 	}
 	
 	public boolean isValidPosition(Ship ship) {
-		int x = ship.getX();
-		int y = ship.getY();
+		int line = ship.getLine();
+		int column = ship.getColumn();
 		Direction direction = ship.getDirection();
 		/**
 		 * Check if the ship fits in the grid.
 		 */
 		if(direction == Direction.HORIZONTAL) {
-			if((x + ship.getSize()) >= CONSTANTS.BOARD_DIMENSION) {
+			if((column + ship.getSize()) >= CONSTANTS.BOARD_DIMENSION) {
 				return false;
 			}
 		} else {
-			if((y + ship.getSize()) >= CONSTANTS.BOARD_DIMENSION) {
+			if((line + ship.getSize()) >= CONSTANTS.BOARD_DIMENSION) {
 				return false;
 			}
 		}
@@ -72,11 +72,11 @@ public class Board {
 		 */
 		for(int i = 0; i < ship.getSize(); i++){
 			if(direction == Direction.HORIZONTAL) {
-				if(grid[x + i][y] == PositionStatus.SHIP){
+				if(grid[line][column + i] == PositionStatus.SHIP){
 					return false;
 				}
 			} else {
-				if(grid[x][y + i] == PositionStatus.SHIP){
+				if(grid[line + i][column] == PositionStatus.SHIP){
 					return false;
 				}
 			}
@@ -84,19 +84,19 @@ public class Board {
 		return true;
 	}
 	
-	public void addGuess(int x, int y) {
-		switch(grid[x][y]) {
+	public void addGuess(int line, int column) {
+		switch(grid[line][column]) {
 		case WATER:
-			grid[x][y] = PositionStatus.MISS;
+			grid[line][column] = PositionStatus.MISS;
 			break;
 		case HIT:
-			grid[x][y] = PositionStatus.HIT;
+			grid[line][column] = PositionStatus.HIT;
 			break;
 		case MISS:
-			grid[x][y] = PositionStatus.MISS;
+			grid[line][column] = PositionStatus.MISS;
 			break;
 		case SHIP:
-			grid[x][y] = PositionStatus.HIT;
+			grid[line][column] = PositionStatus.HIT;
 			break;
 		default:
 			break;
@@ -104,21 +104,21 @@ public class Board {
 	}
 	
 	public Ship hasSunkShip() {
-		boolean foundSunkShip = true;
 		
 		for(Ship ship : aliveShips) {
-			int x = ship.getX();
-			int y = ship.getY();
+			int line = ship.getLine();
+			int column = ship.getColumn();
 			Direction direction = ship.getDirection();
+			boolean foundSunkShip = true;
 			
 			for(int i = 0; i < ship.getSize(); i++){
 				if(direction == Direction.HORIZONTAL) {
-					if(grid[x + i][y] != PositionStatus.HIT) {
+					if(grid[line][column + i] != PositionStatus.HIT) {
 						foundSunkShip = false;
 						break;
 					}
 				} else {
-					if(grid[x][y + i] != PositionStatus.HIT) {
+					if(grid[line + i][column] != PositionStatus.HIT) {
 						foundSunkShip = false;
 						break;
 					}
@@ -133,7 +133,7 @@ public class Board {
 		return null;
 	}
 	
-	public boolean sunkAllShips() {
-		return aliveShips.isEmpty();
+	public boolean hasAliveShip() {
+		return !aliveShips.isEmpty();
 	}
 }

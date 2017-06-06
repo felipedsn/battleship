@@ -2,45 +2,46 @@ package mlp.battleship.ships;
 
 import mlp.battleship.constants.CONSTANTS;
 import mlp.battleship.enums.Direction;
+import mlp.battleship.enums.ShipType;
 
 public abstract class Ship {
-	private int x;
-	private int y;
+	private int line;
+	private int column;
 	private Direction direction;
 	
-	public Ship(int x, int y, Direction direction) {
-		this.setX(x);
-		this.setY(y);
+	public Ship(int line, int column, Direction direction) {
+		this.setColumn(column);
+		this.setLine(line);
 		this.setDirection(direction);
 	}
 	
-	public int getX() {
-		return x;
+	public int getColumn() {
+		return column;
 	}
 	
-	public void setX(int x) {
+	public void setColumn(int column) {
 		
-		if(x > CONSTANTS.BOARD_DIMENSION){
-			this.x = CONSTANTS.BOARD_DIMENSION;
-		} else if (x < 0) {
-			this.x = 0;
+		if(column > CONSTANTS.BOARD_DIMENSION){
+			this.column = CONSTANTS.BOARD_DIMENSION;
+		} else if (column < 0) {
+			this.column = 0;
 		} else {
-			this.x = x;
+			this.column = column;
 		}
 	}
 	
-	public int getY() {
-		return y;
+	public int getLine() {
+		return line;
 	}
 	
-	public void setY(int y) {
+	public void setLine(int line) {
 		
-		if(y > CONSTANTS.BOARD_DIMENSION){
-			this.y = CONSTANTS.BOARD_DIMENSION;
-		} else if (y < 0) {
-			this.y = 0;
+		if(line > CONSTANTS.BOARD_DIMENSION){
+			this.line = CONSTANTS.BOARD_DIMENSION;
+		} else if (line < 0) {
+			this.line = 0;
 		} else {
-			this.y = y;
+			this.line = line;
 		}
 	}
 	
@@ -53,4 +54,6 @@ public abstract class Ship {
 	}
 
 	public abstract int getSize();
+	
+	public abstract ShipType getType();
 }
