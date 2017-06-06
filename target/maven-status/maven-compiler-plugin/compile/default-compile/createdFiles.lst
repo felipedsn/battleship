@@ -1,1 +1,14 @@
-mlp\battleship\App.class
+mlp\battleship\apps\AppOOP.class
+mlp\battleship\board\GridPrinter.class
+mlp\battleship\ships\Mine.class
+mlp\battleship\enums\ShipType.class
+mlp\battleship\ships\Ship.class
+mlp\battleship\apps\AppOOP$1.class
+mlp\battleship\board\Board$1.class
+mlp\battleship\ships\Battleship.class
+mlp\battleship\enums\PositionStatus.class
+mlp\battleship\constants\CONSTANTS.class
+mlp\battleship\apps\AppFunctional.class
+mlp\battleship\board\Board.class
+mlp\battleship\ships\Submarine.class
+mlp\battleship\enums\Direction.class
