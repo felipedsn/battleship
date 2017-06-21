@@ -10,7 +10,7 @@ public class GridPrinter {
 	public static void printGrid(PositionStatus[][] grid) throws IOException {
 		StringBuilder board = new StringBuilder();
 		
-		//clearConsole();
+		clearConsole();
 		printLegend();
 		
 		board.append("\t1  2  3  4  5  6  7  8  9  10 11 12 13 14 15\n");
@@ -32,19 +32,19 @@ public class GridPrinter {
 	}
 	
 	private static void clearConsole() throws IOException {
-//	    final String os = System.getProperty("os.name");
-//	
-//	    if (os.contains("Windows"))
-//	    {
-//	        Runtime.getRuntime().exec("cls");
-//	    }
-//	    else
-//	    {
-//	        Runtime.getRuntime().exec("clear");
-//	    }
+	    final String os = System.getProperty("os.name");
+	
+	    if (os.contains("Windows"))
+	    {
+	        Runtime.getRuntime().exec("cls");
+	    }
+	    else
+	    {
+	        Runtime.getRuntime().exec("clear");
+	    }
 		
-		for(int i = 0; i < 20; i++) {
-			System.out.println("\n");
-		}
+//		for(int i = 0; i < 20; i++) {
+//			System.out.println("\n");
+//		}
 	}
 }

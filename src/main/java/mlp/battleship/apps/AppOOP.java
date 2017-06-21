@@ -74,17 +74,17 @@ public class AppOOP {
 		System.out.println("\n");
 	}
 	
-	@SuppressWarnings("resource")
 	private static void processGuess(Board board) {
-		Scanner input = new Scanner(System.in);
+		
 		Ship ship;
 		int line, column;
 		
 		System.out.println("Give your shot!");
-		System.out.println("Line: ");
-		line = input.nextInt() - 1;
-		System.out.println("Column: ");
-		column = input.nextInt() - 1;
+		// Get line
+		line = getCoordinates("Line: ");
+		//Get column
+		column = getCoordinates("Column: ");
+		
 		
 		board.addGuess(line, column);
 		
@@ -102,5 +102,18 @@ public class AppOOP {
 		if((ship = board.hasSunkShip()) != null) {
 			System.out.println(String.format("Good job, you sunk a %s!\n", ship.getType()));
 		}
+	}
+	
+	@SuppressWarnings("resource")
+	private static int getCoordinates(String prompt) {
+		Scanner input = new Scanner(System.in);
+	    System.out.print(prompt);
+	    while(true){
+	        try {
+	            return Integer.parseInt(input.next());
+	        } catch(NumberFormatException ne) {
+	            System.out.print("Invalid Input!\n"+prompt);
+	        }
+	    }
 	}
 }

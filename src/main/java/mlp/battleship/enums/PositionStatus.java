@@ -4,7 +4,7 @@ public enum PositionStatus {
 	WATER("~"),
 	MISS("*"),
 	HIT("X"),
-	SHIP("V");
+	SHIP("~");
 	
 	private String gridCode;
 	
