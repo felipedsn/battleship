@@ -6,8 +6,9 @@ import mlp.battleship.board.Board;
 import mlp.battleship.board.GridPrinter;
 
 public class AppFunctional {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		Board board = new Board();
-		GridPrinter.printGrid(board.getGrid());
+		String resultMessage = null;
+		GridPrinter.printGrid(board.getGrid(), resultMessage);
 	}
 }

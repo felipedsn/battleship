@@ -18,15 +18,17 @@ import mlp.battleship.ships.Submarine;
  */
 public class AppOOP {
 	
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, InterruptedException{
 		Board board = new Board();
+		String resultMessage = null;
 		
 		createShips(board);
 		while(board.hasAliveShip()) {
-			GridPrinter.printGrid(board.getGrid());
-			processGuess(board);
+			GridPrinter.printGrid(board.getGrid(), resultMessage);
+			resultMessage = processGuess(board);
 			if(!board.hasAliveShip()) {
-				System.out.println("Congratulations, you sunk all the fleet!");
+				resultMessage = "Congratulations, you sunk all the fleet!\n";
+				GridPrinter.printGrid(board.getGrid(), resultMessage);
 			}
 		}
 	}
@@ -74,46 +76,63 @@ public class AppOOP {
 		System.out.println("\n");
 	}
 	
-	private static void processGuess(Board board) {
+	private static String processGuess(Board board) {
 		
 		Ship ship;
 		int line, column;
+		StringBuilder resultMessage = new StringBuilder();
 		
 		System.out.println("Give your shot!");
 		// Get line
-		line = getCoordinates("Line: ");
+		line = getCoordinates("Line: ") - 1;
 		//Get column
-		column = getCoordinates("Column: ");
+		column = getCoordinates("Column: ") - 1;
 		
 		
 		board.addGuess(line, column);
 		
 		switch(board.getGrid()[line][column]) {
 			case MISS:
-				System.out.println("\nYou missed :(\n");
+				resultMessage.append("You missed :(\n");
 				break;
 			case HIT:
-				System.out.println("\nYou hit a ship!");
+				resultMessage.append("You hit a ship!\n");
 				break;
 			default:
 				break;
 		}
 		
 		if((ship = board.hasSunkShip()) != null) {
-			System.out.println(String.format("Good job, you sunk a %s!\n", ship.getType()));
+			resultMessage.append(String.format("Good job, you sunk a %s!\n", ship.getType()));
 		}
+		
+		return resultMessage.toString();
 	}
 	
 	@SuppressWarnings("resource")
 	private static int getCoordinates(String prompt) {
 		Scanner input = new Scanner(System.in);
+		int value;
+		
 	    System.out.print(prompt);
 	    while(true){
 	        try {
-	            return Integer.parseInt(input.next());
+	            value = Integer.parseInt(input.next());
+	            if(isValidCoordinate(value)) {
+	            	break;
+	            } else {
+	            	System.out.print("The value must be between 1 and 15\n"+prompt);
+	            }
+	            
 	        } catch(NumberFormatException ne) {
-	            System.out.print("Invalid Input!\n"+prompt);
+	            System.out.print("Not an integer!\n"+prompt);
 	        }
 	    }
+	    
+	    return value;
+	}
+	
+	private static boolean isValidCoordinate(int coordinate) {
+		return coordinate <= CONSTANTS.BOARD_DIMENSION;
 	}
 }

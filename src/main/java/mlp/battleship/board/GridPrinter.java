@@ -7,11 +7,14 @@ import mlp.battleship.enums.PositionStatus;
 
 public class GridPrinter {
 	
-	public static void printGrid(PositionStatus[][] grid) throws IOException {
+	public static void printGrid(PositionStatus[][] grid, String resultMessage) throws IOException, InterruptedException {
 		StringBuilder board = new StringBuilder();
 		
 		clearConsole();
 		printLegend();
+		if(resultMessage != null) {
+			System.out.println(resultMessage);
+		}
 		
 		board.append("\t1  2  3  4  5  6  7  8  9  10 11 12 13 14 15\n");
 		for(int i = 0; i < CONSTANTS.BOARD_DIMENSION; i++) {
@@ -31,20 +34,17 @@ public class GridPrinter {
 							PositionStatus.MISS.getGridCode()));		
 	}
 	
-	private static void clearConsole() throws IOException {
+	private static void clearConsole() throws IOException, InterruptedException {
 	    final String os = System.getProperty("os.name");
 	
 	    if (os.contains("Windows"))
 	    {
-	        Runtime.getRuntime().exec("cls");
+	    	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 	    }
 	    else
 	    {
-	        Runtime.getRuntime().exec("clear");
+	    	System.out.print("\033[H\033[2J");  
+	        System.out.flush();  
 	    }
-		
-//		for(int i = 0; i < 20; i++) {
-//			System.out.println("\n");
-//		}
 	}
 }
